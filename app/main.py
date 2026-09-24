@@ -24,17 +24,21 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+
 @app.on_event("startup")
 def load_model():
     """Load model artifacts when server starts."""
     model_store.load()
 
+
 @app.get("/", tags=["Root"])
 def root():
     return {"message": "House Price Prediction API is running."}
 
+
 @app.get("/health", tags=["Health"])
 def health():
     return {"status": "ok", "model_loaded": model_store.loaded}
+
 
 app.include_router(predict_router, tags=["Prediction"])

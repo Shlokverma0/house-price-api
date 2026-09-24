@@ -1,13 +1,13 @@
 """
 prediction_service.py
 ---------------------
-Layer 3: Business logic — takes validated input, prepares features,
-calls the model, and returns a prediction.
+Layer 3: Business logic — prepares features and calls the model.
 """
 
 import pandas as pd
 from app.schemas.house import HouseFeatures
 from app.models.model_loader import model_store
+
 
 class PredictionService:
     """Handles feature engineering and model prediction."""
@@ -22,7 +22,7 @@ class PredictionService:
         # Location ko alag nikaalo aur normalize karo
         location = data.pop("location").strip().title()
 
-        # Synonym mapping: user-friendly naam ko dataset ke naam se match karo
+        # Synonym mapping
         synonyms = {
             "Delhi": "New Delhi",
             "Bombay": "Mumbai",

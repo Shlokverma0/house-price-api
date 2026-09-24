@@ -11,6 +11,7 @@ from app.services.prediction_service import PredictionService
 router = APIRouter()
 service = PredictionService()
 
+
 @router.post("/predict", response_model=PredictionResponse)
 def predict_price(features: HouseFeatures):
     """Predict house price based on input features."""

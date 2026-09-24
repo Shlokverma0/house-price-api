@@ -1,18 +1,19 @@
 """
 model_loader.py
 ---------------
-Layer 4: Loads the trained model, imputer, and column list at startup.
+Layer 4: Loads the trained model, imputer, and column list from models/ folder.
 """
 
 import os
 import joblib
 
-# Project root folder ka path nikaalo
+# Project root folder (3 levels up from app/models/)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-MODEL_PATH = os.path.join(BASE_DIR, "house_model.pkl")
-IMPUTER_PATH = os.path.join(BASE_DIR, "house_imputer.pkl")
-COLUMNS_PATH = os.path.join(BASE_DIR, "house_columns.pkl")
+MODEL_PATH = os.path.join(BASE_DIR, "models", "house_model.pkl")
+IMPUTER_PATH = os.path.join(BASE_DIR, "models", "house_imputer.pkl")
+COLUMNS_PATH = os.path.join(BASE_DIR, "models", "house_columns.pkl")
+
 
 class ModelStore:
     """Holds the model, imputer, and column list in memory."""
@@ -28,7 +29,7 @@ class ModelStore:
         if not os.path.exists(MODEL_PATH):
             raise FileNotFoundError(
                 f"Model file nahi mila: {MODEL_PATH}\n"
-                "Pehle 'python train.py' chalao."
+                "Pehle 'python scripts/train.py' chalao."
             )
         
         self.model = joblib.load(MODEL_PATH)
@@ -37,5 +38,6 @@ class ModelStore:
         self.loaded = True
         print(f"[ModelStore] Loaded model with {len(self.columns)} features.")
 
-# Global instance - main.py isko import karega
+
+# Global instance
 model_store = ModelStore()
