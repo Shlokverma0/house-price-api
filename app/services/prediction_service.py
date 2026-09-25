@@ -1,3 +1,8 @@
+"""
+prediction_service.py
+---------------------
+Layer 3: Business logic for prediction.
+"""
 import pandas as pd
 from app.schemas.house import HouseFeatures
 from app.repositories.model_repository import model_repository
@@ -9,7 +14,10 @@ class PredictionService:
             model_repository.load()
 
         data = features.model_dump()
-        location = data.pop("location").strip().title()
+        location = data.pop("location")
+        if hasattr(location, "value"):
+            location = location.value
+        location = location.strip().title()
 
         synonyms = {
             "Delhi": "New Delhi",
@@ -36,4 +44,7 @@ class PredictionService:
 
         df_imputed = model_repository.imputer.transform(df)
         prediction = model_repository.model.predict(df_imputed)[0]
-        return float(prediction)
+        return round(float(prediction) / 100000, 2)      # ← FIX: rupees → lakhs
+
+
+prediction_service = PredictionService()

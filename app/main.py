@@ -8,7 +8,7 @@ from app.repositories.model_repository import model_repository
 app = FastAPI(
     title="House Price Prediction API",
     version="1.0.0",
-    description="4-Layer Architecture (Controller-Service-Repository)",
+    description="Predict house price (in Lakhs INR) from property features.",
 )
 
 app.add_middleware(
