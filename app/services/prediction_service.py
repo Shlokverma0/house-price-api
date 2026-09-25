@@ -42,9 +42,9 @@ class PredictionService:
         df = pd.DataFrame([data])
         df = df[model_repository.columns]
 
-        df_imputed = model_repository.imputer.transform(df)
-        prediction = model_repository.model.predict(df_imputed)[0]
-        return round(float(prediction) / 100000, 2)      # ← FIX: rupees → lakhs
+        
+        prediction = model_repository.model.predict(df)[0]
+        return round(float(prediction), 2)      # ← FIX: rupees → lakhs
 
 
 prediction_service = PredictionService()
